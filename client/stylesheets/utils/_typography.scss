@@ -1,0 +1,37 @@
+/* Typography */
+
+html {
+  font-size: 1em;
+}
+
+body {
+  font-family: 'Droid Serif', serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $body-color;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Roboto', sans;
+  letter-spacing: .02em;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 1.77em;
+}
+
+h2 {
+  font-size: 1.33em;
+}
+
+h3 {
+  font-weight: 100;
+}

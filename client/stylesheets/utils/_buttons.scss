@@ -1,0 +1,22 @@
+/* Button Styling */
+button {
+  background: $green;
+  border: none;
+  font-family: 'Roboto', sans;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 1em;
+  color: white;
+  padding: 1em 6em;
+  border-radius: 50em;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  background-color: #39d490;
+  box-shadow: inset 0 0 .5em #32c686;
+}

@@ -47,6 +47,7 @@ Template.todosItem.events({
   },
 
   'click .js-edit-item': function(event) {
-    $(event.currentTarget).siblings('input[type="text"]').focus();
+    $(event.currentTarget).closest('.list-item').find('input[type="text"]')
+      .focus();
   }
 });

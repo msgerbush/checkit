@@ -1,0 +1,92 @@
+$checkbox-width: 3.375em;
+
+.list-item {
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: .05em .05em .5em .25em rgba(0,0,0,.05);
+
+  &:hover .list-item_content {
+    margin-left: $checkbox-width;
+  }
+}
+
+.list-item.checked {
+  box-shadow: none;
+  color: $grey;
+
+  .list-item_checkbox {
+    background: transparent;
+    color: $icon-grey;
+
+    &:hover {
+      color: $icon-grey-hover;
+    }
+  }
+
+  .list-item_content {
+    background: transparent;
+    padding: 0;
+    margin-left: $checkbox-width;
+  }
+
+  .list-item_actions {
+    display: none;
+  }
+}
+
+.list-item_checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: $checkbox-width;
+  background: $green;
+  color: #FFF;
+  cursor: pointer;
+  text-align: center;
+
+  input {
+    display: none;
+  }
+
+  .icon {
+    font-size: 1.5em;
+    display: block;
+    position: relative;
+    top: 50%;
+    margin-top: -.5em;
+    opacity: .6;
+  }
+}
+
+.list-item_content {
+  position: relative;
+  padding: 1.375em;
+  background: #FFF;
+  transition: all .2s ease-in-out;
+
+  input {
+    cursor: pointer;
+    width: 100%;
+
+    &:focus { cursor: text; }
+    &:disabled { cursor: auto }
+  }
+}
+
+.list-item_actions {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+
+  a {
+    font-size: 1.5em;
+    color: $icon-grey;
+    text-decoration: none;
+
+    &:hover {
+      color: $icon-grey-hover;
+    }
+  }
+}
