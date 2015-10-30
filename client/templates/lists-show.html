@@ -1,0 +1,60 @@
+<template name="listsShow">
+  {{#Layout template="leftNav"}}
+    <div class="page lists-show">
+      <nav class="js-title-nav">
+        {{#if editing}}
+          <form class="js-edit-form list-edit-form">
+            <input type="text" name="title" value="{{title}}">
+            <div class="nav-group right">
+              <a href="#" class="js-cancel nav-item"><span class="icon-close js-cancel" title="Cancel"></span></a>
+            </div>
+          </form>
+        {{else}}
+          <div class="nav-group">
+            <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+          </div>
+
+          <h1 class="js-edit-list title-page"><span class="title-wrapper">{{title}}</span> <span class="count-list">{{incompleteCount}}</span></h1>
+
+          <div class="nav-group right">
+            <div class="options-web">
+              <a class="js-copy-list nav-item">
+                <span class="icon-copy" title="Duplicate list">C</span>
+              </a>
+              <a class="js-delete-list nav-item">
+                <span class="icon-trash" title="Delete list">X</span>
+              </a>
+            </div>
+          </div>
+        {{/if}}
+
+        <form class="js-todo-new todo-new input-symbol">
+          <input type="text" placeholder="Type to add new tasks">
+          <span class="icon-add js-todo-add"></span>
+        </form>
+      </nav>
+
+
+      <div class="content-scrollable list-items">
+        {{#if todosReady}}
+          {{#with _id}} {{! Establish new data context with only the '_id'
+                            field. This way, when the 'incompleteCount' field
+                            changes, we don't re-render the list contents }}
+            {{#each todos this}}
+              {{> todosItem}}
+            {{else}}
+              <div class="wrapper-message">
+                <div class="title-message">No tasks here</div>
+                <div class="subtitle-message">Add new tasks using the field above</div>
+              </div>
+            {{/each}}
+          {{/with}}
+        {{else}}
+            <div class="wrapper-message">
+              <div class="title-message">Loading tasks...</div>
+            </div>
+        {{/if}}
+      </div>
+    </div>
+  {{/Layout}}
+</template>
