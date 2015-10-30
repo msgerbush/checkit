@@ -1,19 +1,20 @@
 <template name="leftNav">
-  <section id="menu">
-    <div class="list-todos">
-      <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
-
-      {{#each lists}}
-        <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{title}}">
-          {{#if incompleteCount}}
-            <span class="count-list">{{incompleteCount}}</span>
-          {{/if}}
-          {{title}}
-        </a>
-      {{/each}}
-
-    </div>
-  </section>
+  <div class="left-hand-nav">
+    <img src="" alt="checkIT logo" />
+    <section id="menu">
+      <h3>My Lists<a class="js-new-list link-list-new"><span class="icon-plus">+</span></a></h3>
+      <div class="list-todos">
+        {{#each lists}}
+          <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{title}}">
+            {{#if incompleteCount}}
+              <span class="count-list">{{incompleteCount}}</span>
+            {{/if}}
+            {{title}}
+          </a>
+        {{/each}}
+      </div>
+    </section>
+  </div>
 
   <div id="right-hand-container">
     {{#each thisArray}}
