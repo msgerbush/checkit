@@ -4,7 +4,10 @@ $checkbox-width: 3.375em;
   position: relative;
   cursor: pointer;
   box-sizing: border-box;
-  box-shadow: .05em .05em .5em .25em rgba(0,0,0,.05);
+
+  &:hover, &.editing {
+    box-shadow: .05em .05em .5em .25em rgba(0,0,0,.05);
+  }
 
   &:hover .list-item_content {
     margin-left: $checkbox-width;

@@ -11,6 +11,10 @@
   background: #FFF;
   padding: 1em;
 
+  &:hover, &.adding {
+    box-shadow: .05em .05em .5em .25em rgba(0,0,0,.05);
+  }
+
   input {
     width: 100%;
   }
