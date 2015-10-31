@@ -122,10 +122,6 @@ Template.listsShow.events({
     copyList(this, template);
   },
 
-  'click .js-todo-add': function(event, template) {
-    template.$('.js-todo-new input').focus();
-  },
-
   'submit .js-todo-new': function(event) {
     event.preventDefault();
 

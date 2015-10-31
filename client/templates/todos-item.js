@@ -46,8 +46,7 @@ Template.todosItem.events({
       Lists.update(this.listId, {$inc: {incompleteCount: -1}});
   },
 
-  'click .js-edit-item': function(event) {
-    $(event.currentTarget).closest('.list-item').find('input[type="text"]')
-      .focus();
+  'click .js-edit-item': function(event, template) {
+    template.$('input[type="text"]').focus();
   }
 });
