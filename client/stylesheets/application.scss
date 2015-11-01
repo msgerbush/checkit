@@ -5,9 +5,11 @@
 @import 'utils/variables';
 @import 'utils/text';
 @import 'utils/typography';
+@import 'utils/icons';
 @import 'utils/forms';
 @import 'utils/buttons';
+@import 'utils/left_nav';
 
-// Templates
+// Components
 @import 'components/todo-items';
 @import 'components/lists';

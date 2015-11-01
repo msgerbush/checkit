@@ -1,49 +1,37 @@
 <template name="listsShow">
   {{#Layout template="leftNav"}}
     <div class="page lists-show">
-      <nav class="js-title-nav">
-        {{#if editing}}
-          <form class="js-edit-form list-edit-form">
-            <input type="text" name="title" value="{{title}}">
-            <div class="nav-group right">
-              <a href="#" class="js-cancel nav-item"><span class="icon-close js-cancel" title="Cancel"></span></a>
-            </div>
-          </form>
-        {{else}}
-          <div class="nav-group">
-            <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
-          </div>
+      <nav class="js-title-nav lists-show_title">
+        <input type="text" name="title" class="js-title-input lists-show_title-input"
+          value="{{title}}" placeholder="List Name">
 
-          <h1 class="js-edit-list title-page"><span class="title-wrapper">{{title}}</span> <span class="count-list">{{incompleteCount}}</span></h1>
+        <input type="textarea" name="description"
+          class="js-description-input lists-show_description-input" value="{{description}}"
+          placeholder="Type your description of this list here.">
 
-          <div class="nav-group right">
-            <div class="options-web">
-              <a class="js-copy-list nav-item">
-                <span class="icon-copy" title="Duplicate list">C</span>
-              </a>
-              <a class="js-delete-list nav-item">
-                <span class="icon-trash" title="Delete list">X</span>
-              </a>
-            </div>
+        <div class="nav-group right lists-show_actions">
+          <div class="options-web">
+            <a class="js-copy-list nav-item">
+              <span class="icon icon-duplicate" title="Duplicate List"></span>
+            </a>
+            <a class="js-delete-list nav-item">
+              <span class="icon icon-trashcan" title="Delete List"></span>
+            </a>
           </div>
-        {{/if}}
+        </div>
       </nav>
 
 
       <div class="content-scrollable list-items">
-        <h2>Checklist</h2>
+        <h2 class="list-items_heading">Checklist</h2>
         {{#if todosReady}}
-          {{#with _id}} {{! Establish new data context with only the '_id'
-                            field. This way, when the 'incompleteCount' field
-                            changes, we don't re-render the list contents }}
-            {{#each todos this}}
-              {{> todosItem}}
-            {{/each}}
-          {{/with}}
+          {{#each todos this}}
+            {{> todosItem}}
+          {{/each}}
           <form class="js-todo-new todo-new input-symbol {{addingClass}}">
             <input type="text" placeholder="Type item description here...">
           </form>
-          <button type="button" name="add-item-button" class="js-add-todo-button button">
+          <button type="button" name="add-item-button" class="js-add-todo-button button add-item-button">
             Add Item
           </button>
         {{else}}

@@ -1,10 +1,69 @@
+.left-hand-nav {
+  background-color:#2896ba;
+  background: linear-gradient(#27aed9, #2896ba);
+  box-shadow: inset -.5em 0 1em -.5em rgba(0,0,0,.4);
+}
+
+.lists-show {
+  height: 100%;
+}
+
 .list-items {
+  // clearfix for buttons
+  overflow: auto;
+  height: 100%;
+
   background-color:#2896ba;
   background: linear-gradient(#f8f8f8, #eaeaea);
 
-  .list-item {
-    margin: 1em 0;
+  // Full-width background
+  margin: 0 -15px;
+  padding: 0 15px;
+}
+
+.list-items .list-item, .todo-new, .add-item-button {
+  margin: 1em 0;
+}
+
+.list-items_heading {
+  padding: 1em 0 1.375em 0;
+}
+
+input.lists-show_title-input {
+  @extend h1;
+  padding-top: 1em;
+  line-height: 1;
+}
+
+.lists-show_title-input, .lists-show_description-input {
+  width: 100%;
+  cursor: pointer;
+
+  &:focus { cursor: text; }
+}
+
+.lists-show_description-input {
+  margin: 2em 0;
+}
+
+.lists-show_actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  a {
+    font-size: 1.5em;
+    color: $icon-grey;
+    text-decoration: none;
+
+    &:hover {
+      color: $icon-grey-hover;
+    }
   }
+}
+
+.add-item-button {
+  float: right;
 }
 
 .todo-new {
@@ -17,5 +76,45 @@
 
   input {
     width: 100%;
+  }
+}
+
+.lists_left-nav {
+  padding-top: 1em;
+  text-align: center;
+  color: #FFF;
+}
+
+.lists_logo {
+  margin-top: 1em;
+}
+
+.lists_left-menu {
+  margin-top: 1.375em;
+  padding-top: 1.375em;
+  border-top: 1px solid #FFF;
+  text-align: left;
+}
+
+.link-list-new {
+  float: right;
+  cursor: pointer;
+
+  .icon { vertical-align: middle; }
+}
+
+.lists_list-links {
+  margin: 1.375em 0 0 1em;
+}
+
+.lists_list-link {
+  margin: 1em 0;
+
+  a {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    letter-spacing: .02em;
+    text-decoration: none;
+    color: #FFF;
   }
 }

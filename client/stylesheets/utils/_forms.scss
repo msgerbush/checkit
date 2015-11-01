@@ -1,8 +1,6 @@
 // Standard text input
-input[type="text"] {
-  font-family: 'Droid Serif', serif;
-  font-weight: 400;
-  font-size: 1em;
+input[type="text"],
+input[type="textarea"] {
   line-height: 1.5;
   color: #666;
   background: transparent;
@@ -11,8 +9,7 @@ input[type="text"] {
   border-radius: 0;
   box-sizing: border-box;
   outline: none;
-
-  &[disabled] { opacity: .5; }
+  padding: 0;
 
   &::-webkit-input-placeholder {
      color: $placeholder-color;
@@ -38,5 +35,5 @@ input[type="text"] {
 
 // Remove chrome/saf autofill yellow background
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  -webkit-box-shadow: 0 0 0 1000px #FFF inset;
 }

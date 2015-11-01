@@ -1,0 +1,12 @@
+html, body, .content-container, .left-hand-content, .right-hand-container {
+  height: 100%;
+}
+
+.left-hand-content {
+  overflow: hidden;
+}
+
+.left-hand-nav {
+  margin-bottom: -100%;
+  padding-bottom: 100%;
+}

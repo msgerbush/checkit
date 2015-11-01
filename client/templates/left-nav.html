@@ -1,24 +1,28 @@
 <template name="leftNav">
-  <div class="left-hand-nav">
-    <img src="" alt="checkIT logo" />
-    <section id="menu">
-      <h3>My Lists<a class="js-new-list link-list-new"><span class="icon-plus">+</span></a></h3>
-      <div class="list-todos">
-        {{#each lists}}
-          <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{title}}">
-            {{#if incompleteCount}}
-              <span class="count-list">{{incompleteCount}}</span>
-            {{/if}}
-            {{title}}
-          </a>
-        {{/each}}
-      </div>
-    </section>
-  </div>
+  <div class="left-hand-content row">
+    <div class="left-hand-nav lists_left-nav col-xs-3">
+      <img src="" alt="checkIT logo" class="lists_logo"/>
+      <section id="menu" class="lists_left-menu">
+        <h2 class="lists_left-menu-title">
+          My Lists
+          <a class="js-new-list link-list-new"><span class="icon icon-plus"></span></a>
+        </h2>
+        <ul class="list-todos lists_list-links">
+          {{#each lists}}
+            <li class="lists_list-link">
+              <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{title}}">
+                {{title}}
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </section>
+    </div>
 
-  <div id="right-hand-container">
-    {{#each thisArray}}
-      {{> yield}}
-    {{/each}}
+    <div class="right-hand-container col-xs-9">
+      {{#each thisArray}}
+        {{> yield}}
+      {{/each}}
+    </div>
   </div>
 </template>

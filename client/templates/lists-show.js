@@ -1,26 +1,4 @@
-var EDITING_KEY = 'editingList';
-Session.setDefault(EDITING_KEY, false);
-
-Template.listsShow.onRendered(function() {
-  this.find('.js-title-nav')._uihooks = {
-    insertElement: function(node, next) {
-      $(node)
-        .hide()
-        .insertBefore(next)
-        .fadeIn();
-    },
-    removeElement: function(node) {
-      $(node).fadeOut(function() {
-        this.remove();
-      });
-    }
-  };
-});
-
 Template.listsShow.helpers({
-  editing: function() {
-    return Session.get(EDITING_KEY);
-  },
 
   todosReady: function() {
     return Router.current().todosHandle.ready();
@@ -31,18 +9,14 @@ Template.listsShow.helpers({
   }
 });
 
-var editList = function(list, template) {
-  Session.set(EDITING_KEY, true);
-
-  // force the template to redraw based on the reactive change
-  Tracker.flush();
-  template.$('.js-edit-form input[type=text]').focus();
+var saveListTitle = function(list, template) {
+  var newTitle = template.$('[name=title]').val() || Lists.defaulTitle();
+  Lists.update(list._id, {$set: {title: newTitle}});
 };
 
-var saveList = function(list, template) {
-  Session.set(EDITING_KEY, false);
-  Lists.update(list._id, {$set: {title: template.$('[name=title]').val()}});
-}
+var saveListDescription = function(list, template) {
+  Lists.update(list._id, {$set: {description: template.$('[name=description]').val()}});
+};
 
 var deleteList = function(list) {
   // we must remove each item individually from the client
@@ -56,62 +30,41 @@ var deleteList = function(list) {
 };
 
 var copyList = function(list) {
-  var list_id = Lists.insert({
-    title: "Copy - " + list.title,
+  var listCopy = {
+    title: "Copy of " + list.title,
+    description: list.description,
     incompleteCount: list.incompleteCount,
     userId: list.userId
-  });
+  }
   var timestamp = (new Date()).getTime();
+  listCopy._id = Lists.insert(listCopy);
 
   Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.insert({listId: list_id,
+    Todos.insert({listId: listCopy._id,
                   text: todo.text,
                   createdAt: new Date(timestamp)});
     timestamp += 1; // ensure unique timestamp.
   });
 
-  Router.go('listsShow', List.findOne(list_id));
+  Router.go('listsShow', listCopy);
   return true;
 };
 
 Template.listsShow.events({
-  'click .js-cancel': function() {
-    Session.set(EDITING_KEY, false);
-  },
-
-  'keydown input[type=text]': function(event) {
-    // ESC
-    if (27 === event.which) {
+  'keydown .js-title-input,.js-description-input': function(event) {
+    // ESC or ENTER
+    if (event.which === 27 || event.which === 13) {
       event.preventDefault();
-      $(event.target).blur();
+      event.target.blur();
     }
   },
 
-  'blur input[type=text]': function(event, template) {
-    // if we are still editing (we haven't just clicked the cancel button)
-    if (Session.get(EDITING_KEY))
-      saveList(this, template);
+  'blur .js-title-input': function(event, template) {
+    saveListTitle(this, template);
   },
 
-  'submit .js-edit-form': function(event, template) {
-    event.preventDefault();
-    saveList(this, template);
-  },
-
-  'change .list-edit': function(event, template) {
-    if ($(event.target).val() === 'edit') {
-      editList(this, template);
-    } else if ($(event.target).val() === 'delete') {
-      deleteList(this, template);
-    } else {
-      toggleListPrivacy(this, template);
-    }
-
-    event.target.selectedIndex = 0;
-  },
-
-  'click .js-edit-list': function(event, template) {
-    editList(this, template);
+  'blur .js-description-input': function(event, template) {
+    saveListDescription(this, template);
   },
 
   'click .js-delete-list': function(event, template) {
@@ -127,7 +80,7 @@ Template.listsShow.events({
   },
 
   'blur .js-todo-new input[type=text]': function(event, template) {
-        template.$('.js-todo-new').removeClass('adding');
+    template.$('.js-todo-new').removeClass('adding');
   },
 
   'submit .js-todo-new': function(event) {

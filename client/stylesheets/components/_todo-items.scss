@@ -16,11 +16,10 @@ $checkbox-width: 3.375em;
 
 .list-item.checked {
   box-shadow: none;
-  color: $grey;
 
   .list-item_checkbox {
     background: transparent;
-    color: $icon-grey;
+    color: $grey;
 
     &:hover {
       color: $icon-grey-hover;
@@ -31,6 +30,9 @@ $checkbox-width: 3.375em;
     background: transparent;
     padding: 0;
     margin-left: $checkbox-width;
+    input {
+      color: $grey;
+    }
   }
 
   .list-item_actions {

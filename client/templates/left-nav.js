@@ -39,7 +39,11 @@ Template.leftNav.helpers({
 
 Template.leftNav.events({
   'click .js-new-list': function() {
-    var list = {incompleteCount: 0, userId: Meteor.userId()};
+    var list = {
+      title: Lists.defaulTitle(),
+      incompleteCount: 0,
+      userId: Meteor.userId()
+    };
     list._id = Lists.insert(list);
 
     Router.go('listsShow', list);

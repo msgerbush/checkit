@@ -15,7 +15,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Roboto', sans;
+  font-family: 'Roboto', sans-serif;
   letter-spacing: .02em;
 }
 
@@ -34,4 +34,10 @@ h2 {
 
 h3 {
   font-weight: 100;
+}
+
+.placeholder {
+  color: $placeholder-color;
+  font-style: italic;
+  letter-spacing: .03em;
 }
