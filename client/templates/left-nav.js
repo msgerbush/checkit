@@ -1,34 +1,22 @@
 var deleteList = function(list) {
-  // we must remove each item individually from the client
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.remove(todo._id);
-  });
-  Lists.remove(list._id);
-
+  Meteor.call('destroyList', list._id);
   Router.go('home');
   return true;
 };
 
 var copyList = function(list) {
-  var listCopy = {
+  var todos = Todos.find({listId: list._id}).fetch();
+  Meteor.call('createList',{
     title: "Copy of " + list.title,
     description: list.description,
-    incompleteCount: list.incompleteCount,
-    userId: list.userId,
     linkedItems: list.linkedItems
-  };
-  var timestamp = (new Date()).getTime();
-  listCopy._id = Lists.insert(listCopy);
-
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.insert({listId: listCopy._id,
-                  text: todo.text,
-                  createdAt: new Date(timestamp)});
-    timestamp += 1; // ensure unique timestamp.
+  }, todos, function (error, listCopyId) {
+      if(error){
+        console.log(error.reason);
+      } else {
+        Router.go('listsShow', {_id: listCopyId});
+      }
   });
-
-  Router.go('listsShow', listCopy);
-  return true;
 };
 
 Template.leftNav.onRendered(function() {
@@ -65,20 +53,21 @@ Template.leftNav.helpers({
 
 Template.leftNav.events({
   'click .js-new-list': function() {
-    var list = {
-      title: Lists.defaulTitle(),
-      incompleteCount: 0,
-      userId: Meteor.userId()
-    };
-    list._id = Lists.insert(list);
-
-    Router.go('listsShow', list);
+    Meteor.call('createList', {
+      title: Lists.defaulTitle()
+    }, function (error, listId) {
+        if(error){
+          console.log(error.reason);
+        } else {
+          Router.go('listsShow', {_id: listId});
+        }
+    });
   },
 
   'click .js-delete-list': function(event, template) {
     deleteList(this, template);
   },
-  
+
   'click .js-copy-list': function(event, template) {
     copyList(this, template);
   }

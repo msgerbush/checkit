@@ -12,8 +12,7 @@ Template.todosItem.helpers({
 Template.todosItem.events({
   'change [type=checkbox]': function(event) {
     var checked = $(event.target).is(':checked');
-    Todos.update(this._id, {$set: {checked: checked}});
-    Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
+    Meteor.call('setChecked', this._id, checked);
   },
 
   'focus input[type=text]': function(event) {
@@ -37,13 +36,11 @@ Template.todosItem.events({
   // we don't flood the server with updates (handles the event at most once
   // every 300ms)
   'keyup input[type=text]': _.throttle(function(event) {
-    Todos.update(this._id, {$set: {text: event.target.value}});
+    Meteor.call('updateTodo', this._id, {text: event.target.value});
   }, 300),
 
   'click .js-delete-item': function() {
-    Todos.remove(this._id);
-    if (! this.checked)
-      Lists.update(this.listId, {$inc: {incompleteCount: -1}});
+    Meteor.call('destroyTodo', this._id);
   },
 
   'click .js-edit-item': function(event, template) {

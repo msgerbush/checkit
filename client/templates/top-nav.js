@@ -1,11 +1,8 @@
 var deleteList = function(event, template) {
   var list = template.data.list;
   var item = template.data.item;
-  // we must remove each item individually from the client
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.remove(todo._id);
-  });
-  Lists.remove(list._id);
+
+  Meteor.call('destroyList', list._id);
 
   Router.go('/'+item.type+'s/'+item.id);
   return true;
@@ -14,29 +11,22 @@ var deleteList = function(event, template) {
 var copyList = function(event, template) {
   var list = template.data.list;
   var item = template.data.item;
-  var listCopy = {
+  var todos = Todos.find({listId: list._id}).fetch();
+  Meteor.call('createList',{
     title: "Copy of " + list.title,
     description: list.description,
-    incompleteCount: list.incompleteCount,
-    userId: list.userId,
     linkedItems: list.linkedItems
-  };
-  var timestamp = (new Date()).getTime();
-  listCopy._id = Lists.insert(listCopy);
-
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.insert({listId: listCopy._id,
-                  text: todo.text,
-                  createdAt: new Date(timestamp)});
-    timestamp += 1; // ensure unique timestamp.
+  }, todos, function (error, listCopyId) {
+      if(error){
+        console.log(error.reason);
+      } else {
+        Router.go('itemListsShow', {
+          _id: item.id,
+          item_type: item.type,
+          list_id: listCopyId
+        });
+      }
   });
-
-  Router.go('itemListsShow', {
-    _id: item.id,
-    item_type: item.type,
-    list_id: listCopy._id
-  });
-  return true;
 };
 
 Template.topNav.helpers({
@@ -56,18 +46,19 @@ Template.topNav.helpers({
 Template.topNav.events({
   'click .js-new-list': function(event, template) {
     var item = template.data.item;
-    var list = {
+    var list_id = Meteor.call('createList', {
       title: Lists.defaulTitle(),
-      incompleteCount: 0,
-      userId: Meteor.userId(),
       linkedItems: [item]
-    };
-    list._id = Lists.insert(list);
-
-    Router.go('itemListsShow', {
-      _id: item.id,
-      item_type: item.type,
-      list_id: list._id
+    }, function (error, listId) {
+        if(error){
+          console.log(error.reason);
+        } else {
+          Router.go('itemListsShow', {
+            _id: item.id,
+            item_type: item.type,
+            list_id: listId
+          });
+        }
     });
   },
 

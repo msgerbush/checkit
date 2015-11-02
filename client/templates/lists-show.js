@@ -11,11 +11,12 @@ Template.listsShow.helpers({
 
 var saveListTitle = function(list, template) {
   var newTitle = template.$('[name=title]').val() || Lists.defaulTitle();
-  Lists.update(list._id, {$set: {title: newTitle}});
+  Meteor.call('updateList', list._id, {title: newTitle});
 };
 
 var saveListDescription = function(list, template) {
-  Lists.update(list._id, {$set: {description: template.$('[name=description]').val()}});
+  Meteor.call('updateList', list._id,
+    {description: template.$('[name=description]').val()});
 };
 
 Template.listsShow.events({
@@ -50,13 +51,11 @@ Template.listsShow.events({
     if (! $input.val())
       return;
 
-    Todos.insert({
+    Meteor.call('createTodo', {
       listId: this._id,
       text: $input.val(),
-      checked: false,
-      createdAt: new Date()
+      checked: false
     });
-    Lists.update(this._id, {$inc: {incompleteCount: 1}});
     $input.val('');
   }
 });

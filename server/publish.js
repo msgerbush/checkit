@@ -2,14 +2,17 @@ Meteor.publish('lists', function() {
   if (this.userId) {
     return Lists.find({userId: this.userId});
   } else {
-    this.ready();
+    return [];
   }
 });
 
 Meteor.publish('todos', function(listId) {
   check(listId, String);
-
-  return Todos.find({listId: listId});
+  if (this.userId && Lists.find({_id: listId, userId: this.userId}).count() > 0) {
+    return Todos.find({listId: listId});
+  } else {
+    return [];
+  }
 });
 
 Meteor.publish("userData", function () {
@@ -17,6 +20,6 @@ Meteor.publish("userData", function () {
     return Meteor.users.find({_id: this.userId},
                              {fields: {'services.spiceworks': 1}});
   } else {
-    this.ready();
+    return [];
   }
 });
