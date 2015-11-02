@@ -44,10 +44,10 @@ Template.listsShow.events({
     template.$('.js-todo-new').removeClass('adding');
   },
 
-  'submit .js-todo-new': function(event) {
+  'submit .js-todo-new, click .js-add-todo-button': function(event, template) {
     event.preventDefault();
 
-    var $input = $(event.target).find('[type=text]');
+    var $input = template.$('.js-todo-new input[type=text]');
     if (! $input.val())
       return;
 
