@@ -9,3 +9,7 @@
     clear: both;
   }
 }
+
+@mixin title-caps {
+  text-transform: uppercase;
+}

@@ -1,0 +1,41 @@
+$item-type-width: 8.25em;
+
+.linked-item_type,
+.linked-item_content {
+  padding: 1.375em;
+}
+
+.linked-item_type {
+  @include title-caps;
+  float: left;
+  width: $item-type-width;
+  text-align: center;
+  background: $green;
+  color: white;
+}
+
+.linked-item_type-text {
+  line-height: 1.5;
+}
+
+.linked-item_content {
+  position: relative;
+  background: #FFF;
+  margin-left: $item-type-width;
+}
+
+.linked-item_actions {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+
+  a {
+    font-size: 1.5em;
+    color: $icon-grey;
+    text-decoration: none;
+
+    &:hover {
+      color: $icon-grey-hover;
+    }
+  }
+}

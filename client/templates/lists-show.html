@@ -21,9 +21,8 @@
         </div>
       </nav>
 
-
-      <div class="list-items">
-        <div class="content-scrollable list-items_wrapper">
+      <div class="list_content">
+        <div class="list-items">
           <h2 class="list-items_heading">Checklist</h2>
           {{#if todosReady}}
             {{#with _id}} {{! Establish new data context with only the '_id'
@@ -45,6 +44,15 @@
               </div>
           {{/if}}
         </div>
+
+        {{#if linkedItems}}
+          <div class="linked-items">
+            <h2 class="linked-items_heading">Linked Items</h2>
+            {{#each linkedItems}}
+              {{> linkedItem}}
+            {{/each}}
+          </div>
+        {{/if}}
       </div>
     </div>
   {{/Layout}}
