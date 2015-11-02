@@ -1,17 +1,19 @@
 var deleteList = function(event, template) {
   var list = template.data.list;
+  var item = template.data.item;
   // we must remove each item individually from the client
   Todos.find({listId: list._id}).forEach(function(todo) {
     Todos.remove(todo._id);
   });
   Lists.remove(list._id);
 
-  Router.go('devicesShow', {_id: template.data.device.id});
+  Router.go('/'+item.type+'s/'+item.id);
   return true;
 };
 
 var copyList = function(event, template) {
   var list = template.data.list;
+  var item = template.data.item;
   var listCopy = {
     title: "Copy of " + list.title,
     description: list.description,
@@ -29,8 +31,11 @@ var copyList = function(event, template) {
     timestamp += 1; // ensure unique timestamp.
   });
 
-  Router.go('deviceListsShow', {_id: template.data.device.id,
-    list_id: listCopy._id});
+  Router.go('itemListsShow', {
+    _id: item.id,
+    item_type: item.type,
+    list_id: listCopy._id
+  });
   return true;
 };
 
@@ -40,8 +45,8 @@ Template.topNav.helpers({
       userId: Meteor.userId(),
       linkedItems: {
         $elemMatch: {
-          type: this.device.type,
-          id: this.device.id
+          type: this.item.type,
+          id: this.item.id
         }
       }
     });
@@ -50,16 +55,20 @@ Template.topNav.helpers({
 
 Template.topNav.events({
   'click .js-new-list': function(event, template) {
-    var device = template.data.device;
+    var item = template.data.item;
     var list = {
       title: Lists.defaulTitle(),
       incompleteCount: 0,
       userId: Meteor.userId(),
-      linkedItems: [device]
+      linkedItems: [item]
     };
     list._id = Lists.insert(list);
 
-    Router.go('deviceListsShow', {_id: device.id, list_id: list._id});
+    Router.go('itemListsShow', {
+      _id: item.id,
+      item_type: item.type,
+      list_id: list._id
+    });
   },
 
   'click .js-delete-list': function(event, template) {
@@ -71,7 +80,11 @@ Template.topNav.events({
   },
 
   'click .top-nav_list-link': function (event, template) {
-    Router.go('deviceListsShow', {_id: template.data.device.id,
-      list_id: this._id});
+    var item = template.data.item;
+    Router.go('itemListsShow', {
+      _id: item.id,
+      item_type: item.type,
+      list_id: this._id
+    });
   }
 });
