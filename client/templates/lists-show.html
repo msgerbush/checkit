@@ -22,27 +22,29 @@
       </nav>
 
 
-      <div class="content-scrollable list-items">
-        <h2 class="list-items_heading">Checklist</h2>
-        {{#if todosReady}}
-          {{#with _id}} {{! Establish new data context with only the '_id'
-                            field. This way, when the 'incompleteCount' field
-                            changes, we don't re-render the list contents }}
-            {{#each todos this}}
-              {{> todosItem}}
-            {{/each}}
-          {{/with}}
-          <form class="js-todo-new todo-new input-symbol {{addingClass}}">
-            <input type="text" placeholder="Type item description here...">
-          </form>
-          <button type="button" name="add-item-button" class="js-add-todo-button button add-item-button">
-            Add Item
-          </button>
-        {{else}}
-            <div class="wrapper-message">
-              <div class="title-message">Loading tasks...</div>
-            </div>
-        {{/if}}
+      <div class="list-items">
+        <div class="content-scrollable list-items_wrapper">
+          <h2 class="list-items_heading">Checklist</h2>
+          {{#if todosReady}}
+            {{#with _id}} {{! Establish new data context with only the '_id'
+                              field. This way, when the 'incompleteCount' field
+                              changes, we don't re-render the list contents }}
+              {{#each todos this}}
+                {{> todosItem}}
+              {{/each}}
+            {{/with}}
+            <form class="js-todo-new todo-new input-symbol {{addingClass}}">
+              <input type="text" placeholder="Type item description here...">
+            </form>
+            <button type="button" name="add-item-button" class="js-add-todo-button button add-item-button">
+              Add Item
+            </button>
+          {{else}}
+              <div class="wrapper-message">
+                <div class="title-message">Loading tasks...</div>
+              </div>
+          {{/if}}
+        </div>
       </div>
     </div>
   {{/Layout}}

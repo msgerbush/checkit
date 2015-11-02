@@ -4,21 +4,29 @@
   box-shadow: inset -.5em 0 1em -.5em rgba(0,0,0,.4);
 }
 
+.lists_logo {
+  width: 6.625em;
+}
+
 .lists-show {
   height: 100%;
 }
 
 .list-items {
-  // clearfix for buttons
-  overflow: auto;
   height: 100%;
-
   background-color:#2896ba;
   background: linear-gradient(#f8f8f8, #eaeaea);
 
   // Full-width background
   margin: 0 -15px;
   padding: 0 15px;
+}
+
+.list-items_wrapper {
+  @include clearfix;
+  padding-bottom: 10em;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .list-items .list-item, .todo-new, .add-item-button {
