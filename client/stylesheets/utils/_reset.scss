@@ -35,6 +35,11 @@ a:active {
   outline: 0;
 }
 
+// For links without hrefs
+a:hover {
+ cursor:pointer;
+}
+
 // Display in IE6-9 and FF3
 // -------------------------
 // Source: http://github.com/necolas/normalize.css

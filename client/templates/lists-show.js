@@ -18,38 +18,6 @@ var saveListDescription = function(list, template) {
   Lists.update(list._id, {$set: {description: template.$('[name=description]').val()}});
 };
 
-var deleteList = function(list) {
-  // we must remove each item individually from the client
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.remove(todo._id);
-  });
-  Lists.remove(list._id);
-
-  Router.go('home');
-  return true;
-};
-
-var copyList = function(list) {
-  var listCopy = {
-    title: "Copy of " + list.title,
-    description: list.description,
-    incompleteCount: list.incompleteCount,
-    userId: list.userId
-  }
-  var timestamp = (new Date()).getTime();
-  listCopy._id = Lists.insert(listCopy);
-
-  Todos.find({listId: list._id}).forEach(function(todo) {
-    Todos.insert({listId: listCopy._id,
-                  text: todo.text,
-                  createdAt: new Date(timestamp)});
-    timestamp += 1; // ensure unique timestamp.
-  });
-
-  Router.go('listsShow', listCopy);
-  return true;
-};
-
 Template.listsShow.events({
   'keydown .js-title-input,.js-description-input': function(event) {
     // ESC or ENTER
@@ -65,14 +33,6 @@ Template.listsShow.events({
 
   'blur .js-description-input': function(event, template) {
     saveListDescription(this, template);
-  },
-
-  'click .js-delete-list': function(event, template) {
-    deleteList(this, template);
-  },
-
-  'click .js-copy-list': function(event, template) {
-    copyList(this, template);
   },
 
   'focus .js-todo-new input[type=text]': function(event, template) {

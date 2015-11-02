@@ -22,10 +22,10 @@ Spiceworks.requestCredential = function (options, credentialRequestCompleteCallb
 
   var credentialToken = Random.secret();
   var login = new SW.Login({appUid: config.appId});
+  var token;
 
   login.request('login').then(
     function(access_token){
-      var card = new SW.Card();
       token = access_token;
       return card.services('environment').request('environment');
     }).then(function (env) {

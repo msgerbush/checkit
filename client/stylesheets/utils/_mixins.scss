@@ -13,3 +13,9 @@
 @mixin title-caps {
   text-transform: uppercase;
 }
+
+// Blue Gradient For Navs
+@mixin blue-gradient {
+  background-color:#2896ba;
+  background: linear-gradient(#27aed9, #2896ba);
+}

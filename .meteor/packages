@@ -18,7 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
-iron:router
 check
 accounts-oauth
 oauth2
@@ -28,3 +27,5 @@ random
 http
 logging
 fourseven:scss
+iron:router@=0.9.4
+underscore

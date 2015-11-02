@@ -1,0 +1,26 @@
+<template name="topNav">
+  <div class="top-nav_header">
+    <div class="top-nav_brand">
+      <img src="/images/check-it-white-no-text.svg" alt="checkIT logo"
+        class="top-nav_logo"/>
+    </div>
+    <ul class="top-nav_list-links">
+      {{#each lists}}
+        <li class="top-nav_list-link">
+          <a title="{{title}}">
+            {{title}}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+    <div class="top-nav_actions">
+      <a class="js-new-list link-list-new">New List<span class="icon icon-plus"></span></a>
+    </div>
+  </div>
+
+  <div class="top-nav_list-show">
+    {{#with list}}
+      {{> yield}}
+    {{/with}}
+  </div>
+</template>

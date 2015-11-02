@@ -1,0 +1,42 @@
+.top-nav_header {
+  @include clearfix;
+  @include blue-gradient();
+  color: #FFF;
+  margin: 0 -15px;
+  padding: 0 15px;
+}
+
+.top-nav_brand {
+  float: left;
+  padding-top: .5em;
+}
+
+.top-nav_logo {
+  width: 2.125em;
+}
+
+.top-nav_list-links {
+  float: left;
+}
+
+.top-nav_list-link, .top-nav_actions {
+  @extend h4;
+
+  a {
+    display: block;
+    padding: 1em;
+    font-weight: 100;
+  }
+}
+
+.top-nav_list-link {
+  float: left;
+}
+
+.top-nav_actions {
+  float: right;
+
+  a {
+    padding-right: 0;
+  }
+}

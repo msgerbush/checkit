@@ -1,6 +1,5 @@
 .left-hand-nav {
-  background-color:#2896ba;
-  background: linear-gradient(#27aed9, #2896ba);
+  @include blue-gradient();
   box-shadow: inset -.5em 0 1em -.5em rgba(0,0,0,.4);
 }
 
@@ -110,8 +109,6 @@ input.lists-show_title-input {
 .link-list-new {
   float: right;
   cursor: pointer;
-
-  .icon { vertical-align: middle; }
 }
 
 .lists_list-links {
