@@ -2,6 +2,7 @@
 
 // Mixins & utilities
 @import 'lib/bootstrap';
+@import "{wolves:bourbon}/bourbon";
 @import 'utils/variables';
 @import 'utils/mixins';
 @import 'utils/typography';
@@ -12,6 +13,7 @@
 @import 'utils/top_nav';
 
 // Components
+@import 'components/loading';
 @import 'components/todo-items';
 @import 'components/linked-items';
 @import 'components/lists';

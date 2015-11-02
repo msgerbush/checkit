@@ -134,3 +134,18 @@ input.lists-show_title-input {
 .linked-item {
   margin: 1em 0;
 }
+
+.lists-show {
+  .loading {
+    padding-top: 0;
+  }
+
+  .loading-app {
+    height: 2em;
+    margin: 1em;
+  }
+
+  .loading-spinner {
+    @include loading-spinner($speed, 4em, $thickness, $color);
+  }
+}

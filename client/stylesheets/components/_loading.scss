@@ -1,0 +1,51 @@
+// Credit: http://codepen.io/anon/pen/jbpBrK
+
+// Spinner Variables
+//********************************************************//
+$color:      #2896BA;
+$size:       10em;
+$speed:      0.75s;
+$thickness:  .4em; // Odd numbers created a "wobble" effect.
+
+// Animation Keyframes
+//********************************************************//
+@mixin rotate-forever {
+  0%    { @include transform(rotate(0deg)); }
+  100%  { @include transform(rotate(360deg)); }
+}
+@-webkit-keyframes rotate-forever { @include rotate-forever; }
+   @-moz-keyframes rotate-forever { @include rotate-forever; }
+        @keyframes rotate-forever { @include rotate-forever; }
+
+
+// The Loading Spinner™
+//********************************************************//
+@mixin loading-spinner($speed, $size, $thickness, $color) {
+  @include animation-duration($speed);
+  @include animation-iteration-count(infinite);
+  @include animation-name(rotate-forever);
+  @include animation-timing-function(linear);
+  @include size($size);
+  border: $thickness solid $color;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  margin-left: -$size/2;
+}
+
+.loading {
+  width: 100%;
+  text-align: center;
+  padding-top: 6em;
+}
+
+.loading-app {
+  height: $size/2;
+  margin: $size/4;
+}
+
+.loading-spinner {
+  @include loading-spinner($speed, $size, $thickness, $color);
+}
