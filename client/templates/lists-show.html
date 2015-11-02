@@ -6,7 +6,7 @@
 
       <input type="textarea" name="description"
         class="js-description-input lists-show_description-input" value="{{description}}"
-        placeholder="Type your description of this list here.">
+        placeholder="Add a list description...">
 
       <div class="nav-group right lists-show_actions">
         <div class="options-web">
@@ -32,10 +32,10 @@
             {{/each}}
           {{/with}}
           <form class="js-todo-new todo-new input-symbol {{addingClass}}">
-            <input type="text" placeholder="Type item description here...">
+            <input type="text" placeholder="Add a new task...">
           </form>
           <button type="button" name="add-item-button" class="js-add-todo-button button add-item-button">
-            Add Item
+            Add to List
           </button>
         {{else}}
           <div class="loading">
