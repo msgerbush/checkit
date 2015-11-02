@@ -10,6 +10,7 @@
 
 .lists-show {
   height: 100%;
+  position: relative;
 }
 
 .list-items {
@@ -56,7 +57,7 @@ input.lists-show_title-input {
 
 .lists-show_actions {
   position: absolute;
-  top: 0;
+  top: 1em;
   right: 0;
 
   a {
