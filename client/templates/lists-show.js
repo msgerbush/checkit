@@ -41,11 +41,21 @@ Template.listsShow.events({
   },
 
   'blur .js-title-input': function(event, template) {
-    updateList(this, {title: template.$('[name=title]').val()});
+    var newTitle = template.$('[name=title]').val();
+
+    if(newTitle === this.title ||
+      (_.isEmpty(newTitle) && _.isEmpty(this.title))){ return; }
+
+    updateList(this, {title: newTitle});
   },
 
   'blur .js-description-input': function(event, template) {
-    updateList(this, {description: template.$('[name=description]').val()});
+    var newDescription = template.$('[name=description]').val();
+
+    if(newDescription === this.description ||
+      (_.isEmpty(newDescription) && _.isEmpty(this.description))){ return; }
+
+    updateList(this, {description: newDescription});
   },
 
   'focus .js-todo-new input[type=text]': function(event, template) {
