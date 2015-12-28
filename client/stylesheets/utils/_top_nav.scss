@@ -4,14 +4,16 @@
   color: #FFF;
   margin: 0 -15px;
   padding: 0 15px;
+  height: 3em;
 }
 
 .top-nav_brand {
   float: left;
-  padding-top: .5em;
+  line-height: 3em;
 }
 
 .top-nav_logo {
+  vertical-align: middle;
   width: 2.125em;
 }
 

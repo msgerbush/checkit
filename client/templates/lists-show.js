@@ -1,7 +1,8 @@
 Template.listsShow.helpers({
 
   todosReady: function() {
-    return Router.current().todosHandle.ready();
+    var handle = Router.current().todosHandle;
+    return !handle || handle.ready();
   },
 
   todos: function(listId) {
@@ -9,14 +10,25 @@ Template.listsShow.helpers({
   }
 });
 
-var saveListTitle = function(list, template) {
-  var newTitle = template.$('[name=title]').val() || Lists.defaulTitle();
-  Meteor.call('updateList', list._id, {title: newTitle});
+var createList = function (attrs, todos) {
+  Meteor.call('createList', attrs, todos, function (error, newListId) {
+    var params;
+    if(error){
+      console.log(error.reason);
+    } else {
+      params = _.extend(Router.current().params, {_id: newListId});
+      Router.go(Router.current().route.name, params);
+    }
+  });
 };
 
-var saveListDescription = function(list, template) {
-  Meteor.call('updateList', list._id,
-    {description: template.$('[name=description]').val()});
+var updateList = function(list, newAttrs) {
+  var attrs = _.extend(list, newAttrs);
+  if(list._id){
+    Meteor.call('updateList', list._id, attrs);
+  } else {
+    createList(attrs);
+  }
 };
 
 Template.listsShow.events({
@@ -29,11 +41,21 @@ Template.listsShow.events({
   },
 
   'blur .js-title-input': function(event, template) {
-    saveListTitle(this, template);
+    var newTitle = template.$('[name=title]').val();
+
+    if(newTitle === this.title ||
+      (_.isEmpty(newTitle) && _.isEmpty(this.title))){ return; }
+
+    updateList(this, {title: newTitle});
   },
 
   'blur .js-description-input': function(event, template) {
-    saveListDescription(this, template);
+    var newDescription = template.$('[name=description]').val();
+
+    if(newDescription === this.description ||
+      (_.isEmpty(newDescription) && _.isEmpty(this.description))){ return; }
+
+    updateList(this, {description: newDescription});
   },
 
   'focus .js-todo-new input[type=text]': function(event, template) {
@@ -48,14 +70,23 @@ Template.listsShow.events({
     event.preventDefault();
 
     var $input = template.$('.js-todo-new input[type=text]');
+    var todo;
+
     if (! $input.val())
       return;
 
-    Meteor.call('createTodo', {
-      listId: this._id,
+    todo = {
       text: $input.val(),
       checked: false
-    });
+    };
+
+    if(!this._id){
+      createList(this, [todo]);
+    } else {
+      todo.listId = this._id;
+      Meteor.call('createTodo', todo);
+    }
+
     $input.val('');
   }
 });
