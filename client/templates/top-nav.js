@@ -1,16 +1,18 @@
 var deleteList = function(event, template) {
-  var list = template.data.list;
-  var item = template.data.item;
-
+  var list = template.data;
+  var params = Router.current().params;
   Meteor.call('destroyList', list._id);
 
-  Router.go('/'+item.type+'s/'+item.id);
+  Router.go('itemShow', {
+    item_id: params.item_id,
+    item_type: params.item_type
+  });
   return true;
 };
 
 var copyList = function(event, template) {
-  var list = template.data.list;
-  var item = template.data.item;
+  var list = template.data;
+  var params = Router.current().params;
   var todos = Todos.find({listId: list._id}).fetch();
   Meteor.call('createList',{
     title: "Copy of " + list.title,
@@ -21,9 +23,9 @@ var copyList = function(event, template) {
         console.log(error.reason);
       } else {
         Router.go('itemListsShow', {
-          _id: item.id,
-          item_type: item.type,
-          list_id: listCopyId
+          item_id: params.item_id,
+          item_type: params.item_type,
+          _id: listCopyId
         });
       }
   });
@@ -31,34 +33,28 @@ var copyList = function(event, template) {
 
 Template.topNav.helpers({
   lists: function() {
+    var params = Router.current().params;
     return Lists.find({
       userId: Meteor.userId(),
       linkedItems: {
         $elemMatch: {
-          type: this.item.type,
-          id: this.item.id
+          type: params.item_type,
+          id: parseInt(params.item_id)
         }
       }
     });
+  },
+  titleText: function () {
+    return this.title || Lists.defaultTitle();
   }
 });
 
 Template.topNav.events({
   'click .js-new-list': function(event, template) {
-    var item = template.data.item;
-    var list_id = Meteor.call('createList', {
-      title: Lists.defaulTitle(),
-      linkedItems: [item]
-    }, function (error, listId) {
-        if(error){
-          console.log(error.reason);
-        } else {
-          Router.go('itemListsShow', {
-            _id: item.id,
-            item_type: item.type,
-            list_id: listId
-          });
-        }
+    var params = Router.current().params;
+    Router.go('itemListsShow', {
+      item_id: params.item_id,
+      item_type: params.item_type
     });
   },
 
@@ -71,11 +67,11 @@ Template.topNav.events({
   },
 
   'click .top-nav_list-link': function (event, template) {
-    var item = template.data.item;
+    var params = Router.current().params;
     Router.go('itemListsShow', {
-      _id: item.id,
-      item_type: item.type,
-      list_id: this._id
+      item_id: params.item_id,
+      item_type: params.item_type,
+      _id: this._id
     });
   }
 });

@@ -2,7 +2,7 @@
   <div class="page lists-show">
     <nav class="js-title-nav lists-show_title">
       <input type="text" name="title" class="js-title-input lists-show_title-input"
-        value="{{title}}" placeholder="List Name">
+        value="{{title}}" placeholder="My New List">
 
       <input type="textarea" name="description"
         class="js-description-input lists-show_description-input" value="{{description}}"
@@ -10,12 +10,14 @@
 
       <div class="nav-group right lists-show_actions">
         <div class="options-web">
-          <a class="js-copy-list nav-item">
-            <span class="icon icon-duplicate" title="Duplicate List"></span>
-          </a>
-          <a class="js-delete-list nav-item">
-            <span class="icon icon-trashcan" title="Delete List"></span>
-          </a>
+          {{#if _id}}
+            <a class="js-copy-list nav-item">
+              <span class="icon icon-duplicate" title="Duplicate List"></span>
+            </a>
+            <a class="js-delete-list nav-item">
+              <span class="icon icon-trashcan" title="Delete List"></span>
+            </a>
+          {{/if}}
         </div>
       </div>
     </nav>

@@ -5,13 +5,15 @@
       <section id="menu" class="lists_left-menu">
         <h2 class="lists_left-menu-title">
           My Lists
-          <a class="js-new-list link-list-new"><span class="icon icon-plus"></span></a>
+          {{#if _id}}
+            <a class="js-new-list link-list-new"><span class="icon icon-plus"></span></a>
+          {{/if}}
         </h2>
         <ul class="list-todos lists_list-links">
           {{#each lists}}
             <li class="lists_list-link">
-              <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{title}}">
-                {{title}}
+              <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{titleText}}">
+                {{titleText}}
               </a>
             </li>
           {{/each}}

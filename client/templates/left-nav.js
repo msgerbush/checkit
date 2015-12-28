@@ -48,20 +48,15 @@ Template.leftNav.helpers({
     if (current.route.name === 'listsShow' && current.params._id === this._id) {
       return 'active';
     }
+  },
+  titleText: function () {
+    return this.title || Lists.defaultTitle();
   }
 });
 
 Template.leftNav.events({
   'click .js-new-list': function() {
-    Meteor.call('createList', {
-      title: Lists.defaulTitle()
-    }, function (error, listId) {
-        if(error){
-          console.log(error.reason);
-        } else {
-          Router.go('listsShow', {_id: listId});
-        }
-    });
+    Router.go('listsShow');
   },
 
   'click .js-delete-list': function(event, template) {
